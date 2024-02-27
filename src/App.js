@@ -4,6 +4,7 @@ import ClassCounter from './component/ClassCounter'
 import './styles/App.css'
 import PostsList from './component/PostsList'
 import MyButton from './component/UI/button/MyButton'
+import MyInput from './component/UI/input/MyInput'
 
 function App() {
   const [value, setValue] = useState('Text')
@@ -16,8 +17,8 @@ function App() {
   return (
     <div className="App">
       <form>
-        <input type="text" placeholder="Title" />
-        <input type="text" placeholder="Description" />
+        <MyInput type="text" placeholder="Title" />
+        <MyInput type="text" placeholder="Description" />
         <MyButton disabled>Create</MyButton>
       </form>
       <PostsList posts={posts} title="List 1" />
