@@ -2,7 +2,8 @@ import { useState } from 'react'
 import Counter from './component/Counter'
 import ClassCounter from './component/ClassCounter'
 import './styles/App.css'
-import PostItem from './component/PostItem'
+import PostsList from './component/PostsList'
+import MyButton from './component/UI/button/MyButton'
 
 function App() {
   const [value, setValue] = useState('Text')
@@ -14,10 +15,13 @@ function App() {
 
   return (
     <div className="App">
-      <h1 style={{ textAlign: 'center' }}>List</h1>
-      {posts.map((post) => (
-        <PostItem key={post.id} post={post}></PostItem>
-      ))}
+      <form>
+        <input type="text" placeholder="Title" />
+        <input type="text" placeholder="Description" />
+        <MyButton disabled>Create</MyButton>
+      </form>
+      <PostsList posts={posts} title="List 1" />
+      <PostsList posts={posts} title="List 2" />
       <h2>{value}</h2>
       <input value={value} onChange={(event) => setValue(event.target.value)} />
       <Counter />
