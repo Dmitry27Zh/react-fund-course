@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import Counter from './component/Counter'
 import ClassCounter from './component/ClassCounter'
 import './styles/App.css'
@@ -13,13 +13,26 @@ function App() {
     { id: 2, title: 'JS 2', body: 'description' },
     { id: 3, title: 'JS 3', body: 'description' },
   ])
+  const titleInputRef = useRef()
+  const bodyInputRef = useRef()
+  const addNewPost = (e) => {
+    e.preventDefault()
+    const newPost = {
+      id: Date.now(),
+      title: titleInputRef.current.value,
+      body: bodyInputRef.current.value,
+    }
+    setPosts([...posts, newPost])
+    titleInputRef.current.value = ''
+    bodyInputRef.current.value = ''
+  }
 
   return (
     <div className="App">
       <form>
-        <MyInput type="text" placeholder="Title" />
-        <MyInput type="text" placeholder="Description" />
-        <MyButton disabled>Create</MyButton>
+        <MyInput ref={titleInputRef} type="text" placeholder="Title" />
+        <MyInput ref={bodyInputRef} type="text" placeholder="Description" />
+        <MyButton onClick={addNewPost}>Create</MyButton>
       </form>
       <PostsList posts={posts} title="List 1" />
       <PostsList posts={posts} title="List 2" />
