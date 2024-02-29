@@ -15,12 +15,15 @@ function App() {
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
   }
+  const removePost = (post) => {
+    setPosts(posts.filter((existingPost) => existingPost.id !== post.id))
+  }
 
   return (
     <div className="App">
       <PostForm addNewPost={addNewPost} />
-      <PostsList posts={posts} title="List 1" />
-      <PostsList posts={posts} title="List 2" />
+      <PostsList posts={posts} title="List 1" removePost={removePost} />
+      <PostsList posts={posts} title="List 2" removePost={removePost} />
       <h2>{value}</h2>
       <input value={value} onChange={(event) => setValue(event.target.value)} />
       <Counter />

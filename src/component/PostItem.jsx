@@ -1,14 +1,14 @@
-const PostItem = (props) => {
+const PostItem = ({ post, removePost }) => {
   return (
     <div className="post">
       <div className="post__content">
         <strong>
-          {props.post.id}. {props.post.title}
+          {post.id}. {post.title}
         </strong>
-        <div>{props.post.body}</div>
+        <div>{post.body}</div>
       </div>
       <div className="post__btns">
-        <button>Удалить</button>
+        <button onClick={() => removePost(post)}>Удалить</button>
       </div>
     </div>
   )
