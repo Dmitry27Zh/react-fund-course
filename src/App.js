@@ -3,6 +3,8 @@ import './styles/App.css'
 import PostsList from './component/PostsList'
 import PostForm from './component/PostForm'
 import PostFilter from './component/PostFilter'
+import MyModal from './component/UI/modal/MyModal/MyModal'
+import MyButton from './component/UI/button/MyButton'
 
 function App() {
   const [posts, setPosts] = useState([
@@ -11,6 +13,7 @@ function App() {
     { id: 3, title: 'abc', body: '2description' },
   ])
   const [filter, setFilter] = useState({ sort: '', query: '' })
+  const [modal, setModal] = useState(false)
   const sortedPosts = useMemo(() => {
     if (filter.sort) {
       return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
@@ -23,6 +26,7 @@ function App() {
   }, [sortedPosts, filter.query])
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
+    setModal(false)
   }
   const removePost = (post) => {
     setPosts(posts.filter((existingPost) => existingPost.id !== post.id))
@@ -30,7 +34,12 @@ function App() {
 
   return (
     <div className="App">
-      <PostForm addNewPost={addNewPost} />
+      <MyButton style={{ marginTop: '30px' }} onClick={() => setModal(true)}>
+        Create
+      </MyButton>
+      <MyModal visible={modal} setVisible={setModal}>
+        <PostForm addNewPost={addNewPost} />
+      </MyModal>
       <hr style={{ margin: '15px 0' }} />
       <PostFilter filter={filter} setFilter={setFilter} />
       <PostsList posts={sortedAndSearchedPosts} title="List 1" removePost={removePost} />
