@@ -3,6 +3,7 @@ import './styles/App.css'
 import PostsList from './component/PostsList'
 import PostForm from './component/PostForm'
 import MySelect from './component/UI/select/MySelect'
+import MyInput from './component/UI/input/MyInput'
 
 function App() {
   const [posts, setPosts] = useState([
@@ -11,6 +12,7 @@ function App() {
     { id: 3, title: 'abc', body: '2description' },
   ])
   const [selectedSort, setSelectedSort] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
   }
@@ -25,9 +27,9 @@ function App() {
   return (
     <div className="App">
       <PostForm addNewPost={addNewPost} />
-      {posts.length === 0 ? 'No posts...' : <PostsList posts={posts} title="List 1" removePost={removePost} />}
       <hr style={{ margin: '15px 0' }} />
       <div>
+        <MyInput placeholder="Search..." value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} />
         <MySelect
           defaultValue="Sort by"
           options={[
@@ -38,6 +40,7 @@ function App() {
           onChange={sortPosts}
         />
       </div>
+      {posts.length === 0 ? 'No posts...' : <PostsList posts={posts} title="List 1" removePost={removePost} />}
     </div>
   )
 }
