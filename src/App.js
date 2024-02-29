@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import './styles/App.css'
 import PostsList from './component/PostsList'
 import PostForm from './component/PostForm'
@@ -13,6 +13,13 @@ function App() {
   ])
   const [selectedSort, setSelectedSort] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
+  const sortedPosts = useMemo(() => {
+    if (selectedSort) {
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    } else {
+      return posts
+    }
+  }, [selectedSort, posts])
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
   }
@@ -21,7 +28,6 @@ function App() {
   }
   const sortPosts = (sort) => {
     setSelectedSort(sort)
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])))
   }
 
   return (
@@ -40,7 +46,11 @@ function App() {
           onChange={sortPosts}
         />
       </div>
-      {posts.length === 0 ? 'No posts...' : <PostsList posts={posts} title="List 1" removePost={removePost} />}
+      {sortedPosts.length === 0 ? (
+        'No posts...'
+      ) : (
+        <PostsList posts={sortedPosts} title="List 1" removePost={removePost} />
+      )}
     </div>
   )
 }
