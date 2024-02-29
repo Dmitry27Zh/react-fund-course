@@ -2,8 +2,7 @@ import { useMemo, useState } from 'react'
 import './styles/App.css'
 import PostsList from './component/PostsList'
 import PostForm from './component/PostForm'
-import MySelect from './component/UI/select/MySelect'
-import MyInput from './component/UI/input/MyInput'
+import PostFilter from './component/PostFilter'
 
 function App() {
   const [posts, setPosts] = useState([
@@ -37,18 +36,11 @@ function App() {
     <div className="App">
       <PostForm addNewPost={addNewPost} />
       <hr style={{ margin: '15px 0' }} />
-      <div>
-        <MyInput placeholder="Search..." value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} />
-        <MySelect
-          defaultValue="Sort by"
-          options={[
-            { value: 'title', name: 'Name' },
-            { value: 'body', name: 'Description' },
-          ]}
-          value={selectedSort}
-          onChange={sortPosts}
-        />
-      </div>
+      <PostFilter
+        onSearch={(newSearchQuery) => setSearchQuery(newSearchQuery)}
+        selectedSort={selectedSort}
+        onSort={sortPosts}
+      />
       {sortedAndSearchedPosts.length === 0 ? (
         'No posts...'
       ) : (
