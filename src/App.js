@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import './styles/App.css'
 import PostsList from './component/PostsList'
 import PostForm from './component/PostForm'
@@ -9,6 +9,7 @@ import { usePosts } from './hooks/usePosts'
 import PostService from './API/PostService'
 import MyLoader from './component/UI/loader/MyLoader/MyLoader'
 import { useFetching } from './hooks/useFetching'
+import { getPageCount, getPagesArray } from './utils/pages'
 
 function App() {
   const [posts, setPosts] = useState([])
@@ -16,17 +17,21 @@ function App() {
   const [modal, setModal] = useState(false)
   const [limit, setLimit] = useState(10)
   const [page, setPage] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
   const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
     const response = await PostService.getAll(limit, page)
     setPosts(response.data)
-    setTotalCount(response.headers['x-total-count'])
+    const totalCount = response.headers['x-total-count']
+    setTotalPages(getPageCount(totalCount, limit))
   })
+  const pagesArray = useMemo(() => {
+    return getPagesArray(totalPages)
+  }, [totalPages])
 
   useEffect(() => {
     fetchPosts()
-  }, [])
+  }, [page])
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
     setModal(false)
@@ -51,6 +56,20 @@ function App() {
       ) : (
         <PostsList posts={sortedAndSearchedPosts} title="List 1" removePost={removePost} />
       )}
+      <div className="pagination">
+        {pagesArray.map((pageItem) => {
+          const rootClasses = ['pagination__button']
+          if (pageItem === page) {
+            rootClasses.push('current')
+          }
+
+          return (
+            <MyButton key={pageItem} className={rootClasses.join(' ')} onClick={() => setPage(pageItem)}>
+              {pageItem}
+            </MyButton>
+          )
+        })}
+      </div>
     </div>
   )
 }

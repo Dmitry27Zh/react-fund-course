@@ -47,3 +47,13 @@
 .center {
   align-self: center;
 }
+
+.pagination {
+  display: flex;
+  gap: 5px;
+  padding: 20px 30px;
+}
+
+.pagination__button.current {
+  outline: 2px solid orangered;
+}
