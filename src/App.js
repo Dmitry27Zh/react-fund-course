@@ -10,37 +10,29 @@ function App() {
     { id: 2, title: 'def', body: '1description' },
     { id: 3, title: 'abc', body: '2description' },
   ])
-  const [selectedSort, setSelectedSort] = useState('')
-  const [searchQuery, setSearchQuery] = useState('')
+  const [filter, setFilter] = useState({ sort: '', query: '' })
   const sortedPosts = useMemo(() => {
-    if (selectedSort) {
-      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]))
+    if (filter.sort) {
+      return [...posts].sort((a, b) => a[filter.sort].localeCompare(b[filter.sort]))
     } else {
       return posts
     }
-  }, [selectedSort, posts])
+  }, [filter.sort, posts])
   const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter((post) => post.title.trim().toLowerCase().includes(searchQuery.trim().toLowerCase()))
-  }, [sortedPosts, searchQuery])
+    return sortedPosts.filter((post) => post.title.trim().toLowerCase().includes(filter.query.trim().toLowerCase()))
+  }, [sortedPosts, filter.query])
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
   }
   const removePost = (post) => {
     setPosts(posts.filter((existingPost) => existingPost.id !== post.id))
   }
-  const sortPosts = (sort) => {
-    setSelectedSort(sort)
-  }
 
   return (
     <div className="App">
       <PostForm addNewPost={addNewPost} />
       <hr style={{ margin: '15px 0' }} />
-      <PostFilter
-        onSearch={(newSearchQuery) => setSearchQuery(newSearchQuery)}
-        selectedSort={selectedSort}
-        onSort={sortPosts}
-      />
+      <PostFilter filter={filter} setFilter={setFilter} />
       {sortedAndSearchedPosts.length === 0 ? (
         'No posts...'
       ) : (
