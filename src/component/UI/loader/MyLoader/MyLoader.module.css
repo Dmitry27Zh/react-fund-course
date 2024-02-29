@@ -1,0 +1,8 @@
+.myLoader {
+  align-self: center;
+  width: 100px;
+  height: 100px;
+  padding: 20px;
+  border-radius: 50%;
+  border: 1px dashed teal;
+}
