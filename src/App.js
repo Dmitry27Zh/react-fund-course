@@ -10,11 +10,7 @@ import PostService from './API/PostService'
 import MyLoader from './component/UI/loader/MyLoader/MyLoader'
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: 'ghl', body: '3description' },
-    { id: 2, title: 'def', body: '1description' },
-    { id: 3, title: 'abc', body: '2description' },
-  ])
+  const [posts, setPosts] = useState([])
   const [filter, setFilter] = useState({ sort: '', query: '' })
   const [modal, setModal] = useState(false)
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query)
