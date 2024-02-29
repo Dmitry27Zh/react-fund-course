@@ -20,6 +20,9 @@ function App() {
       return posts
     }
   }, [selectedSort, posts])
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter((post) => post.title.trim().toLowerCase().includes(searchQuery.trim().toLowerCase()))
+  }, [sortedPosts, searchQuery])
   const addNewPost = (newPost) => {
     setPosts([...posts, newPost])
   }
@@ -46,10 +49,10 @@ function App() {
           onChange={sortPosts}
         />
       </div>
-      {sortedPosts.length === 0 ? (
+      {sortedAndSearchedPosts.length === 0 ? (
         'No posts...'
       ) : (
-        <PostsList posts={sortedPosts} title="List 1" removePost={removePost} />
+        <PostsList posts={sortedAndSearchedPosts} title="List 1" removePost={removePost} />
       )}
     </div>
   )
