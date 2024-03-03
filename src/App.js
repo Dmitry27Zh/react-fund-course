@@ -5,9 +5,12 @@ import { useEffect, useState } from 'react'
 import { AuthContext } from './context'
 
 function App() {
-  const [isAuth, setIsAuth] = useState(!!localStorage.getItem('auth'))
+  const [isAuth, setIsAuth] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   useEffect(() => {
+    setIsLoading(true)
     setIsAuth(!!localStorage.getItem('auth'))
+    setIsLoading(false)
   }, [])
 
   return (
@@ -15,6 +18,7 @@ function App() {
       value={{
         isAuth,
         setIsAuth,
+        isLoading,
       }}
     >
       <div className="App">
