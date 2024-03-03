@@ -57,3 +57,22 @@
 .pagination__button.current {
   outline: 2px solid orangered;
 }
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 15px;
+  background: lightgreen;
+}
+
+.navbar__links {
+  display: flex;
+  gap: 2px;
+}
+
+.navbar__link {
+  display: flex;
+  padding: 5px;
+}
