@@ -32,4 +32,10 @@ export const privateRoutes = [
   },
 ]
 
-export const publicRoutes = [{ path: '/login', element: <Login /> }]
+export const publicRoutes = [
+  { path: '/login', element: <Login /> },
+  {
+    path: '*',
+    element: <Navigate to="/login" />,
+  },
+]
