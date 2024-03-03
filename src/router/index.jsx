@@ -3,8 +3,9 @@ import About from '../pages/About'
 import Posts from '../pages/Posts'
 import Error from '../pages/Error'
 import Post from '../pages/Post'
+import Login from '../pages/Login'
 
-export const routes = [
+export const privateRoutes = [
   {
     path: '/about',
     element: <About />,
@@ -30,3 +31,5 @@ export const routes = [
     element: <Navigate to="/error" />,
   },
 ]
+
+export const publicRoutes = [{ path: '/login', element: <Login /> }]

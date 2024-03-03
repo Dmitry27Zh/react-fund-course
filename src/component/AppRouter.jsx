@@ -1,12 +1,14 @@
 import { Route, Routes } from 'react-router-dom'
-import { routes } from '../router'
+import { privateRoutes, publicRoutes } from '../router'
 
 const AppRouter = () => {
+  const isAuth = true
+
   return (
     <Routes>
-      {routes.map((route, index) => (
-        <Route key={index} {...route} />
-      ))}
+      {isAuth
+        ? privateRoutes.map((route, index) => <Route key={index} {...route} />)
+        : publicRoutes.map((route, index) => <Route key={index} {...route} />)}
     </Routes>
   )
 }
